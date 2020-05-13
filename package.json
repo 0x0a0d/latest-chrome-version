@@ -1,0 +1,22 @@
+{
+  "name": "latest-chrome-version",
+  "version": "1.0.1",
+  "description": "get latest chrome version",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "chrome", "version"
+  ],
+  "author": "0x0a0d",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "uuid": "^3.4.0"
+  }
+}
