@@ -2,21 +2,32 @@
   "name": "latest-chrome-version",
   "version": "1.0.1",
   "description": "get latest chrome version",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepack": "tsc"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/0x0a0d/latest-chrome-version"
   },
   "keywords": [
-    "chrome", "version"
+    "chrome",
+    "version"
   ],
   "author": "0x0a0d",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
-    "uuid": "^3.4.0"
-  }
+    "axios": "^0.21.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@cylution/eslint-config-nodejs": "^1.0.8",
+    "@types/uuid": "^8.3.1",
+    "@typescript-eslint/parser": "^4.32.0",
+    "eslint": "^7.32.0",
+    "typescript": "^4.4.3"
+  },
+  "files": [
+    "dist"
+  ]
 }
