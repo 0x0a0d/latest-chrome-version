@@ -10,7 +10,7 @@ const parseVersion = (xml: string): string => {
   return m[1]
 }
 
-type Platform = 'win' | 'mac'
+export type Platform = 'win' | 'mac'
 const buildRequestData = (platform: Platform, os_version: string, app_id: string) => {
   return `<request protocol="3.0" version="KeystoneAdmin-1.2.5.1190" ismachine="0" requestid="{${v4()}}" dedup="cr" sessionid="{${v4()}}" installsource="ondemandupdate">
         <os platform="${platform}" version="${os_version}" arch="x64" sp="" />
