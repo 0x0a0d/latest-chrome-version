@@ -23,13 +23,13 @@ const buildRequestData = (platform: Platform, os_version: string, app_id: string
 /**
  * get latest chrome version
  */
-export const latestChromeVersion = (platform: 'mac' | 'win'): Promise<string> => {
+export const latestChromeVersion = (platform: Platform = 'mac'): Promise<string> => {
   const requestData = platform === 'win'
-  ? buildRequestData('win', '10.0.18363.0', '{8A69D345-D564-463C-AFF1-A69D9E530F96}')
+    ? buildRequestData('win', '10.0.18363.0', '{8A69D345-D564-463C-AFF1-A69D9E530F96}')
     : buildRequestData('mac', '10.12', 'com.google.Chrome')
 
   return axios.post('https://tools.google.com/service/update2', requestData, {
-    params: {'cup2hreq': 'foo', 'cup2key': 'bar'},
+    params: { cup2hreq: 'foo', cup2key: 'bar' },
     headers: {
       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.0.0 Safari/537.36'
     },

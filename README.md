@@ -5,7 +5,7 @@ Get latest chrome version
 > npm i latest-chrome-version
 
 ### Usage
-- latestChromeVersion([platform = 'win' | 'mac'])
+- latestChromeVersion(platform?: 'mac' | 'win' = 'mac')
 
 ```js
 import { latestChromeVersion } from 'latest-chrome-version'
