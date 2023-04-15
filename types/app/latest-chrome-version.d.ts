@@ -1,0 +1,1 @@
+type Platform = 'win' | 'mac'

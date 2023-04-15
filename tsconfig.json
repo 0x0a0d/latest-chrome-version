@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "pretty": false,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "target": "es6",
+    "lib": ["es6"],
+    "declaration": true,
+//    "outDir": "dist"
+  },
+  "include": [
+    "index.ts",
+    "types",
+    "src",
+    "./node_modules/**/types/**.d.ts"
+  ],
+  "exclude": [
+    "dist"
+  ]
+}
