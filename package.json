@@ -2,7 +2,7 @@
   "name": "latest-chrome-version",
   "version": "2.0.3",
   "description": "get latest chrome version",
-  "main": "src/latest-chrome-version.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest",
     "prepack": "rm -rf dist; npm run build:clean; tsc -p tsconfig.prod.json",
@@ -41,7 +41,6 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "axios": "^1.3.5",
-    "uuid": "^9.0.0"
+    "axios": "^1.8.4"
   }
 }
