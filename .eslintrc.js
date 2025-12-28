@@ -4,6 +4,7 @@ module.exports = {
   },
   extends: [
     '@cylution/nodejs',
+    'plugin:oxlint/recommended',
   ],
   overrides: [
     // typescript
@@ -25,19 +26,15 @@ module.exports = {
             delimiter: 'comma',
             requireLast: false,
           },
-          // overrides: {
-          //   interface: {
-          //     multiline: {
-          //       delimiter: 'none',
-          //       requireLast: false
-          //     }
-          //   }
-          // }
         }],
         '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-namespace': 'off',
         '@typescript-eslint/type-annotation-spacing': ['warn', {
           before: false,
           after: true,
+        }],
+        '@typescript-eslint/no-unused-vars': ['warn', {
+          caughtErrors: 'none',
         }],
       },
       overrides: [

@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
@@ -132,10 +131,14 @@ dist
 *.env
 # .env.prod
 .env.*
+# local data
+local
+local.*
+*.local
 # typescrtipt build
 /index.js
 /index.d.ts
 src/**/**.js
 src/**/**.d.ts
-local
-/types/jest**
+/types/test**
+!/types/test.env.d.ts

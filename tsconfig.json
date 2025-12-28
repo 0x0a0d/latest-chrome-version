@@ -10,7 +10,7 @@
     "pretty": false,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "target": "es6",
+    "target": "ES2020",
     "lib": ["es6"],
     "declaration": true,
 //    "outDir": "dist"

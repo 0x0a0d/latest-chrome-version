@@ -1,5 +1,6 @@
-import axios from 'axios'
-import { randomUUID } from 'node:crypto'
+import { Platform } from '../types/http'
+import { v4 } from './utils/uuid'
+import * as http from './utils/http-client'
 
 const checkStatus = (xml: string): boolean => {
   const m = xml.match(/<updatecheck status="([^"]+)">/)
@@ -13,7 +14,7 @@ const parseVersion = (xml: string): string => {
 }
 
 const buildRequestData = (platform: Platform, os_version: string, app_id: string) => {
-  return `<request protocol="3.0" version="KeystoneAdmin-1.2.5.1190" ismachine="0" requestid="{${randomUUID()}}" dedup="cr" sessionid="{${randomUUID()}}" installsource="ondemandupdate">
+  return `<request protocol="3.0" version="KeystoneAdmin-1.2.5.1190" ismachine="0" requestid="{${v4()}}" dedup="cr" sessionid="{${v4()}}" installsource="ondemandupdate">
         <os platform="${platform}" version="${os_version}" arch="x64" sp="" />
         <app appid="${app_id}" version="1">
                 <updatecheck />
@@ -29,7 +30,7 @@ export const latestChromeVersion = (platform: Platform = 'mac', os_version?: str
     ? buildRequestData('win', os_version ?? '10.0.18363.0', '{8A69D345-D564-463C-AFF1-A69D9E530F96}')
     : buildRequestData('mac', os_version ?? '99', 'com.google.Chrome')
 
-  return axios.post('https://tools.google.com/service/update2', requestData, {
+  return http.post<string>('https://tools.google.com/service/update2', requestData, {
     params: { cup2hreq: 'foo', cup2key: 'bar' },
     headers: {
       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.0.0 Safari/537.36',

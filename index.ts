@@ -1,1 +1,2 @@
-export { latestChromeVersion } from './src/latest-chrome-version'
+export * from './src/latest-chrome-version'
+export * from './types/http'
