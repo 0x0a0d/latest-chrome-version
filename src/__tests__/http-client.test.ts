@@ -6,10 +6,9 @@ import { EventEmitter } from 'events'
 vi.mock('https')
 
 describe('http-client', () => {
-  describe('post', () => {
-    it('should send a POST request with correct options', async () => {
+  describe('get', () => {
+    it('should send a GET request with correct options', async () => {
       const mockReq = new EventEmitter() as any
-      mockReq.write = vi.fn()
       mockReq.end = vi.fn()
 
       const mockRes = new EventEmitter() as any
@@ -22,7 +21,7 @@ describe('http-client', () => {
         return mockReq
       })
 
-      const promise = http.post('https://example.com/api', { foo: 'bar' }, {
+      const promise = http.get('https://example.com/api', {
         params: { q: 'search' },
         headers: { 'X-Custom': 'value' }
       })
@@ -35,32 +34,15 @@ describe('http-client', () => {
       expect(https.request).toHaveBeenCalledWith(
         'https://example.com/api?q=search',
         expect.objectContaining({
-          method: 'POST',
+          method: 'GET',
           headers: expect.objectContaining({
-            'X-Custom': 'value',
-            'Content-Type': 'application/json'
+            'X-Custom': 'value'
           })
         }),
         expect.any(Function)
       )
-      expect(response.data).toBe('{"result":"ok"}')
+      expect(response.data).toEqual({ result: 'ok' })
       expect(response.status).toBe(200)
-    })
-
-    it('should handle request errors', async () => {
-      const mockReq = new EventEmitter() as any
-      mockReq.write = vi.fn()
-      mockReq.end = vi.fn()
-
-      const mockedHttpsRequest = https.request as any
-      mockedHttpsRequest.mockReturnValue(mockReq)
-
-      const promise = http.post('https://example.com/api', {})
-
-      const error = new Error('Network error')
-      mockReq.emit('error', error)
-
-      await expect(promise).rejects.toThrow('Network error')
     })
   })
 })

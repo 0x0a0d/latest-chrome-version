@@ -13,21 +13,17 @@ const buildUrl = (baseUrl: string, params?: Record<string, string>): string => {
 }
 
 /**
- * Minimal HTTPS POST client to replace axios
+ * Minimal HTTPS GET client
  */
-export const post = <T = any>(
+export const get = <T = any>(
   url: string,
-  data: any,
   options: HttpOptions = {}
 ): Promise<HttpResponse<T>> => {
   const fullUrl = buildUrl(url, options.params)
-  const body = typeof data === 'string' ? data : JSON.stringify(data)
 
   const requestOptions: RequestOptions = {
-    method: 'POST',
+    method: 'GET',
     headers: {
-      'Content-Type': typeof data === 'string' ? 'application/xml' : 'application/json',
-      'Content-Length': Buffer.byteLength(body),
       ...options.headers
     }
   }
@@ -39,8 +35,16 @@ export const post = <T = any>(
         responseBody += chunk
       })
       res.on('end', () => {
+        let data = responseBody as unknown as T
+        if (res.headers['content-type']?.includes('application/json')) {
+          try {
+            data = JSON.parse(responseBody)
+          } catch (e) {
+            // ignore
+          }
+        }
         resolve({
-          data: responseBody as unknown as T,
+          data,
           status: res.statusCode || 0,
           headers: res.headers
         })
@@ -48,7 +52,6 @@ export const post = <T = any>(
     })
 
     req.on('error', reject)
-    req.write(body)
     req.end()
   })
 }

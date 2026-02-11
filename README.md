@@ -1,38 +1,50 @@
-# latestChromeVersion
+# latest-chrome-version
 
-A function that retrieves the latest version of Google Chrome for a given platform and operating system version.
+[![npm version](https://img.shields.io/npm/v/latest-chrome-version.svg?style=flat-square)](https://www.npmjs.com/package/latest-chrome-version)
+[![install size](https://img.shields.io/badge/dynamic/json?label=install%20size&query=%24.installSize&url=https%3A%2F%2Fpackagephobia.com%2Fv2%2Fapi.json%3Fp%3Dlatest-chrome-version&style=flat-square)](https://packagephobia.com/result?p=latest-chrome-version)
+[![npm downloads](https://img.shields.io/npm/dm/latest-chrome-version.svg?style=flat-square)](https://www.npmjs.com/package/latest-chrome-version)
+[![license](https://img.shields.io/npm/l/latest-chrome-version.svg?style=flat-square)](https://github.com/0x0a0d/latest-chrome-version/blob/main/LICENSE)
+
+A lightweight library to fetch the latest Google Chrome version from the official [Chrome for Testing API](https://googlechromelabs.github.io/chrome-for-testing/).
+
+## Installation
+
+```bash
+npm install latest-chrome-version
+# or
+yarn add latest-chrome-version
+# or
+pnpm add latest-chrome-version
+```
+
+## Usage
 
 ```typescript
-import { latestChromeVersion } from 'chrome-version';
+import { latestChromeVersion } from 'latest-chrome-version';
 
-latestChromeVersion('mac', '10.15').then((version) => {
-console.log(`Latest version of Chrome for macOS 10.15 is ${version}`);
-}).catch((err) => {
-console.error(`Error retrieving latest Chrome version: ${err}`);
-});
+async function checkVersion() {
+  try {
+    const version = await latestChromeVersion();
+    console.log(`Latest Stable Chrome version: ${version}`);
+  } catch (err) {
+    console.error('Error fetching Chrome version:', err);
+  }
+}
+
+checkVersion();
 ```
 
 ## API
 
-`latestChromeVersion(platform: 'mac' | 'win' = 'mac', os_version?: string): Promise<string>`
+### `latestChromeVersion(): Promise<string>`
 
-Returns a Promise that resolves to the latest version of Google Chrome for the specified platform and operating system version. The `platform` parameter is optional and defaults to `'mac'`. The `os_version` parameter is optional and should be specified as a string in the format `'major.minor.patch'`.
+Returns a `Promise` that resolves to the latest Stable Google Chrome version string (e.g., `121.0.6167.85`).
 
-If the latest version of Chrome cannot be retrieved, the Promise will be rejected with an error message.
-
-```typescript
-import { latestChromeVersion } from 'chrome-version';
-
-latestChromeVersion('win', '10.0.19042').then((version) => {
-console.log(`Latest version of Chrome for Windows 10.0.19042 is ${version}`);
-}).catch((err) => {
-console.error(`Error retrieving latest Chrome version: ${err}`);
-});
-```
+Data is fetched directly from Google Chrome Labs' reliable source.
 
 ## License
 
-This project is licensed under the MIT License
+This project is licensed under the [ISC License](LICENSE).
 
 ### Author
-0x0a0d
+[0x0a0d](https://github.com/0x0a0d)

@@ -10,5 +10,3 @@ export interface HttpOptions {
   params?: Record<string, string>
   headers?: Record<string, string>
 }
-
-export type Platform = 'win' | 'mac'

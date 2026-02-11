@@ -9,56 +9,34 @@ describe('latestChromeVersion', () => {
     vi.clearAllMocks()
   })
 
-  it('should return version for mac platform', async () => {
-    const mockXml = '<?xml version="1.0" encoding="UTF-8"?><response><app><updatecheck status="ok"><manifest version="120.0.6099.129"/></updatecheck></app></response>'
-    const mockedHttpPost = vi.mocked(http.post)
-    mockedHttpPost.mockResolvedValue({
-      data: mockXml,
+  it('should return version from Chrome for Testing API', async () => {
+    const mockJson = {
+      channels: {
+        Stable: { version: '121.0.6167.85' }
+      }
+    }
+    const mockedHttpGet = vi.mocked(http.get)
+    mockedHttpGet.mockResolvedValue({
+      data: mockJson,
       status: 200,
-      headers: {}
+      headers: { 'content-type': 'application/json' }
     } as any)
 
-    const version = await latestChromeVersion('mac')
-    expect(version).toBe('120.0.6099.129')
-    expect(http.post).toHaveBeenCalledWith(
-      expect.stringContaining('tools.google.com'),
-      expect.stringContaining('com.google.Chrome'),
-      expect.any(Object)
+    const version = await latestChromeVersion()
+    expect(version).toBe('121.0.6167.85')
+    expect(http.get).toHaveBeenCalledWith(
+      'https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json'
     )
   })
 
-  it('should throw error if status is not 200', async () => {
-    const mockedHttpPost = vi.mocked(http.post)
-    mockedHttpPost.mockResolvedValue({
-      data: '',
+  it('should throw error if CfT API fails', async () => {
+    const mockedHttpGet = vi.mocked(http.get)
+    mockedHttpGet.mockResolvedValue({
+      data: null,
       status: 500,
       headers: {}
     } as any)
 
-    await expect(latestChromeVersion()).rejects.toThrow('Request failed. Response status should be 200')
-  })
-
-  it('should throw error if updatecheck status is not ok', async () => {
-    const mockXml = '<?xml version="1.0" encoding="UTF-8"?><response><app><updatecheck status="noupdate"/></app></response>'
-    const mockedHttpPost = vi.mocked(http.post)
-    mockedHttpPost.mockResolvedValue({
-      data: mockXml,
-      status: 200,
-      headers: {}
-    } as any)
-
-    await expect(latestChromeVersion()).rejects.toThrow('[NoUpdate]: Check params: platform, os_version')
-  })
-
-  it('should throw error if parsing fails', async () => {
-    const mockXml = '<?xml version="1.0" encoding="UTF-8"?><response><app><updatecheck status="ok"></updatecheck></app></response>'
-    const mockedHttpPost = vi.mocked(http.post)
-    mockedHttpPost.mockResolvedValue({
-      data: mockXml,
-      status: 200,
-      headers: {}
-    } as any)
-
-    await expect(latestChromeVersion()).rejects.toThrow('parseVersion failed')
+    await expect(latestChromeVersion()).rejects.toThrow('Request failed. Response status should be 200, got 500')
   })
 })
